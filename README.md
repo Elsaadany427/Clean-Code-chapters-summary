@@ -264,3 +264,98 @@ Variables with unclear context.
 ## 17. Final words
 
 - Choosing good names requires good descriptive skills and a shared cultural background
+
+
+
+# 
+
+# Chapter 3: Functions
+
+## 1. Small
+
+- Function should be small
+- *They should be smaller than that*
+- Function should hardly ever be 20 lines long.
+
+## 2. Do one thing
+
+- *FUNCTIONS SHOULD DO ONE THING. THEY SHOULD DO IT WELL. THEY SHOULD DO IT ONLY.*
+
+## 3. One level of abstraction per function
+
+## 4. Switch statements
+
+- Bury the `switch` statement in the basement of an ABSTRACT FACTORY
+- Create polymorphic objects, hidden behind an inheritance relationship
+
+## 5. Use descriptive names
+
+- Don't be afraid to make a name long.
+- Don't be afraid to spend time choosing a name.
+- Use the same phrases, nouns, and verbs in the function name
+
+## 6. Function Arguments
+
+- The ideal number of arguments for a function is
+  zero (niladic). Next comes one (monadic), followed
+  closely by two (dyadic).
+
+- Three arguments (triadic) should be avoided where possible
+
+- Using an output argument instead of a return value for a transformation is confusing.
+
+- Flag arguments are ugly => Split the function into two
+
+  
+
+## 7. Have no side effects
+
+## 8. Command Query Separation
+
+Functions should either do something or answer something, but not both.
+
+## 9. Prefer Exceptions to Returning Error codes
+
+Turn this
+
+```
+if (deletePage(page) == E_OK) {
+    if (registry.deleteReference(page.name) == E_OK) {
+        if (configKeys.deleteKey(page.name.makeKey()) == E_OK){
+            logger.log("page deleted");
+        } else {
+            logger.log("configKey not deleted");
+        }
+    } else {
+    logger.log("deleteReference from registry failed");
+    }
+} else {
+    logger.log("delete failed");
+    return E_ERROR;
+}
+```
+
+to this
+
+```
+try {
+    deletePage(page);
+    registry.deleteReference(page.name);
+    configKeys.deleteKey(page.name.makeKey());
+} 
+catch (Exception e) {
+    logger.log(e.getMessage());
+}
+```
+
+## 10. Don't Repeat Yourself
+
+Duplication may be the root of all evil in software
+
+## 
+
+## 11. Structured Programming
+
+Dijkstra said that every function, and every block within a function, should have one entry and one exit
+
+It mean that there should only be one return statement in a function, no `break` or `continue` statements in a loop, and never, *ever*, any `goto` statements.
